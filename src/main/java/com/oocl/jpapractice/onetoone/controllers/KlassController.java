@@ -45,4 +45,17 @@ public class KlassController {
         repository.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @Transactional
+    @PutMapping(path = "/{id}")
+    public Klass put(@PathVariable int id, @RequestBody Klass klass) {
+        List<Klass> klasses = findAll();
+        Klass k = klasses.stream().filter(klass1 -> klass1.getId() == id).findFirst().orElse(null);
+        if (k != null) {
+            klass.setId(id);
+            save(klass);
+            return klass;
+        }
+        return null;
+    }
 }
