@@ -16,8 +16,7 @@ public class Klass {
 
     private String name;
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "klass", fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_id")
     private Leader leader;
 
