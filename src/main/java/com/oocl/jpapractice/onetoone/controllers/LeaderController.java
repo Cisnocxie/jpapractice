@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
-@RequestMapping("/leader")
+@RequestMapping("/leaders")
 public class LeaderController {
 
     private LeaderRepository repository;

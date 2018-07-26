@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/klass")
+@RequestMapping("/klasses")
 public class KlassController {
 
     private KlassRepository repository;
@@ -48,7 +48,7 @@ public class KlassController {
     @Transactional
     @DeleteMapping(path = "/{id}")
     public ResponseEntity delete(@PathVariable int id) {
-        if (findAll().stream().filter(klass -> klass.getId() == id).findFirst().orElse(null) != null) {
+        if (repository.findById(id).orElse(null) != null) {
             repository.deleteById(id);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -57,8 +57,7 @@ public class KlassController {
     @Transactional
     @PutMapping(path = "/{id}")
     public Klass put(@PathVariable int id, @RequestBody Klass klass) {
-        List<Klass> klasses = findAll();
-        Klass k = klasses.stream().filter(klass1 -> klass1.getId() == id).findFirst().orElse(null);
+        Klass k = repository.findById(id).orElse(null);
         if (k != null) {
             klass.setId(id);
             repository.save(klass);
@@ -70,15 +69,20 @@ public class KlassController {
     @Transactional
     @PatchMapping(path = "/{id}")
     public Klass patch(@PathVariable int id, @RequestBody Leader leader) {
-        Optional<Klass> optionalKlass = repository.findById(id);
-        if (optionalKlass.orElse(null) != null) {
-            Klass klass = optionalKlass.get();
-            klass.setLeader(leader);
+        Klass klass = repository.findById(id).orElse(null);
+        Leader leader1 = leaderRepository.findById(leader.getId()).orElse(null);
+        if (klass != null) {
+            klass.setLeader(leader1);
             repository.save(klass);
 
-            leader.setKlass(optionalKlass.get());
-            leaderRepository.save(leader);
-            return optionalKlass.get();
+            if (leader1 != null) {
+                leader1.setKlass(klass);
+                leaderRepository.save(leader1);
+            } else {
+                leader.setKlass(klass);
+                leaderRepository.save(leader);
+            }
+            return klass;
         }
         return null;
     }
