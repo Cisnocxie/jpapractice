@@ -29,5 +29,10 @@ public class LeaderController {
         return repository.findAll();
     }
 
-    
+    @GetMapping(path = "/{id}")
+    public Leader find(@PathVariable int id) {
+        return repository.findById(id).orElse(null);
+    }
+
+
 }
