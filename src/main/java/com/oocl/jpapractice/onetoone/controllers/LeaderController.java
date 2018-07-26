@@ -4,10 +4,9 @@ import com.oocl.jpapractice.onetoone.entities.Klass;
 import com.oocl.jpapractice.onetoone.entities.Leader;
 import com.oocl.jpapractice.onetoone.repositories.LeaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/leader")
@@ -25,5 +24,10 @@ public class LeaderController {
         return repository.save(leader);
     }
 
+    @GetMapping()
+    public List<Leader> findAll() {
+        return repository.findAll();
+    }
 
+    
 }
