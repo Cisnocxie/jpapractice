@@ -3,6 +3,7 @@ package com.oocl.jpapractice.onetoone.controllers;
 import com.oocl.jpapractice.onetoone.entities.Klass;
 import com.oocl.jpapractice.onetoone.repositories.KlassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,12 +36,13 @@ public class KlassController {
     @Transactional
     @GetMapping(path = "/{id}")
     public Klass find(@PathVariable int id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElse(null);
     }
 
-//    @Transactional
-//    @DeleteMapping(path = "/klass/{id}")
-//    public ResponseEntity delete(@PathVariable int id) {
-//        repository.delete();
-//    }
+    @Transactional
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity delete(@PathVariable int id) {
+        repository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
