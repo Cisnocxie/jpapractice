@@ -42,7 +42,9 @@ public class KlassController {
     @Transactional
     @DeleteMapping(path = "/{id}")
     public ResponseEntity delete(@PathVariable int id) {
-        repository.deleteById(id);
+        if (findAll().stream().filter(klass -> klass.getId() == id).findFirst().orElse(null) != null) {
+            repository.deleteById(id);
+        }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

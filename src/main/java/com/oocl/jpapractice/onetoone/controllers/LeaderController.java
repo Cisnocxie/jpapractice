@@ -4,6 +4,8 @@ import com.oocl.jpapractice.onetoone.entities.Klass;
 import com.oocl.jpapractice.onetoone.entities.Leader;
 import com.oocl.jpapractice.onetoone.repositories.LeaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +36,11 @@ public class LeaderController {
         return repository.findById(id).orElse(null);
     }
 
-
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity delete(@PathVariable int id) {
+        if (findAll().stream().filter(leader -> leader.getId() == id).findFirst().orElse(null) != null) {
+            repository.deleteById(id);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
