@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -42,5 +43,17 @@ public class LeaderController {
             repository.deleteById(id);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Transactional
+    @PutMapping(path = "/{id}")
+    public Leader put(@PathVariable int id, @RequestBody Leader leader) {
+        List<Leader> leaders = findAll();
+        if (leaders.stream().filter(leader1 -> leader1.getId() == id).findFirst().orElse(null) != null) {
+            leader.setId(id);
+            save(leader);
+            return leader;
+        }
+        return null;
     }
 }
