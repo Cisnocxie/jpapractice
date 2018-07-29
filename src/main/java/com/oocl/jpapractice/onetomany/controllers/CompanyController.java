@@ -1,8 +1,8 @@
-package com.oocl.jpapractice.onetoone.controllers;
+package com.oocl.jpapractice.onetomany.controllers;
 
-import com.oocl.jpapractice.onetoone.entities.Company;
-import com.oocl.jpapractice.onetoone.repositories.CompanyRepository;
-import com.oocl.jpapractice.onetoone.repositories.EmployeeRepository;
+import com.oocl.jpapractice.onetomany.entities.Company;
+import com.oocl.jpapractice.onetomany.repositories.CompanyRepository;
+import com.oocl.jpapractice.onetomany.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

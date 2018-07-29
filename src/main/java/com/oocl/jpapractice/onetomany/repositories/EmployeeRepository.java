@@ -1,6 +1,6 @@
-package com.oocl.jpapractice.onetoone.repositories;
+package com.oocl.jpapractice.onetomany.repositories;
 
-import com.oocl.jpapractice.onetoone.entities.Employee;
+import com.oocl.jpapractice.onetomany.entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
